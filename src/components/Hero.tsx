@@ -26,7 +26,7 @@ export default function Hero() {
             href="#demo"
             className="flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-full shadow-lg cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 hover:scale-105 hover:shadow-xl transition-all duration-300 group"
           >
-            Try AlterTone Free
+            Try AlterTone
             <ArrowDown className="w-5 h-5 group-hover:animate-bounce"/>
           </a>
 

@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
 
         <div className="text-center mt-8 pt-8 border-t border-gray-800 text-gray-400 text-sm">
-          © 2025 AlterTone. Open source and free forever.
+          © 2025 AlterTone.
         </div>
       </div>
     </footer>
