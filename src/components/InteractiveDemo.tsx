@@ -110,16 +110,36 @@ export default function InteractiveDemo() {
 
         <div
           className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200 p-6 sm:p-8 flex flex-col items-center justify-center">
+
+          {/* Error Display */}
+          {error && (
+            <div className="w-full max-w-3xl mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-center gap-2 text-red-700">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <span className="text-sm font-medium">{error}</span>
+              </div>
+            </div>
+          )}
+
           {/* Input */}
           <div className="w-full max-w-3xl mb-8">
             <label className="block text-sm font-semibold text-gray-700 mb-3">Your Original Text</label>
             <div className="relative">
-          <textarea
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Enter the text you want to transform..."
-            className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none resize-none text-gray-700"
-          />
+              <textarea
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Enter the text you want to transform..."
+                className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none resize-none text-gray-700"
+              />
+              {inputText.trim() && (
+                <button
+                  onClick={handleClearInput}
+                  className="absolute top-3 right-3 p-2 text-gray-400 hover:text-red-500 hover:scale-110 transition-all duration-200 cursor-pointer"
+                  title="Clear input"
+                >
+                  <Trash2 className="w-4 h-4"/>
+                </button>
+              )}
             </div>
           </div>
 
@@ -243,7 +263,7 @@ export default function InteractiveDemo() {
                 <div className="absolute bottom-4 right-4 flex gap-2">
                   <button
                     onClick={() => setOutputText("")}
-                    className="p-2 text-gray-400 hover:scale-110 hover:text-blue-500 transition-transform cursor-pointer"
+                    className="p-2 text-gray-400 hover:scale-110 hover:text-red-500 transition-transform cursor-pointer"
                   >
                     <Trash2 className={"w-4 h-4"}/>
                   </button>
