@@ -1,14 +1,10 @@
 import {ArrowDown, Sparkles} from 'lucide-react'
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
       {/* Enhanced subtle background for hero, could be a very light solid or keep a subtle gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 backdrop-blur-2xl"></div>
-      <div className="absolute top-6 right-6 z-10">
-        <ThemeToggle />
-      </div>
 
       <div className="relative max-w-7xl mx-auto text-center">
         <div
