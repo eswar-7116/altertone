@@ -79,24 +79,25 @@ export default function InteractiveDemo() {
           <p className="text-xl text-gray-600">Experience the magic of AI-powered tone transformation</p>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200 p-8">
+        <div
+          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200 p-6 sm:p-8 flex flex-col items-center justify-center">
           {/* Input */}
-          <div className="mb-8">
+          <div className="w-full max-w-3xl mb-8">
             <label className="block text-sm font-semibold text-gray-700 mb-3">Your Original Text</label>
             <div className="relative">
-              <textarea
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                placeholder="Enter the text you want to transform..."
-                className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none resize-none text-gray-700"
-              />
+          <textarea
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="Enter the text you want to transform..."
+            className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none resize-none text-gray-700"
+          />
             </div>
           </div>
 
           {/* Controls */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* Role input */}
-            <div>
+            <div className="w-full">
               <label className="block text-sm font-semibold text-gray-700 mb-3">Role (Optional)</label>
               <input
                 type="text"
@@ -108,7 +109,7 @@ export default function InteractiveDemo() {
             </div>
 
             {/* Temperature */}
-            <div>
+            <div className="w-full">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Creativity Level: {temperature}
               </label>
@@ -129,7 +130,7 @@ export default function InteractiveDemo() {
           </div>
 
           {/* Tone Selection */}
-          <div className="mb-8">
+          <div className="w-full max-w-3xl mb-8">
             <label className="block text-sm font-semibold text-gray-700 mb-4">Choose Your Tone</label>
             <div className="relative">
               <button
@@ -161,10 +162,10 @@ export default function InteractiveDemo() {
           </div>
 
           {/* Actions */}
-          <div className="flex flex-wrap gap-4 mb-8">
+          <div className="w-full max-w-3xl flex flex-col sm:flex-row gap-4 mb-8 justify-center">
             <button
               onClick={handleDetectTone}
-              className="flex items-center gap-2 px-6 py-3 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-xl hover:scale-105 hover:border-blue-500 hover:text-blue-600 transition-all duration-200"
+              className="flex items-center justify-center gap-2 px-6 py-3 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-xl hover:scale-105 hover:border-blue-500 hover:text-blue-600 transition-all duration-200 min-w-[160px]"
             >
               <Settings className="w-4 h-4"/>
               Detect Tone
@@ -173,7 +174,7 @@ export default function InteractiveDemo() {
             <button
               onClick={handleApplyTone}
               disabled={!inputText.trim() || isProcessing}
-              className="flex items-center gap-2 px-8 py-3 cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:scale-105 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 px-8 py-3 cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:scale-105 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px]"
             >
               <Sparkles className="w-4 h-4"/>
               {isProcessing ? 'Transforming...' : 'Apply Tone'}
@@ -181,7 +182,7 @@ export default function InteractiveDemo() {
           </div>
 
           {/* Output */}
-          <div>
+          <div className="w-full max-w-3xl">
             <label className="block text-sm font-semibold text-gray-700 mb-3">Transformed Text</label>
             <div className="relative">
               <div
