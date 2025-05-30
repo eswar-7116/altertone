@@ -2,6 +2,7 @@
 
 import {SetStateAction, useEffect, useRef, useState} from 'react'
 import {Copy, Share2, Sparkles, Settings, ChevronDown, Trash2, Check} from 'lucide-react'
+import axios from "axios";
 
 const toneOptions = [
   {id: 'professional', label: 'Professional'},
@@ -45,10 +46,29 @@ export default function InteractiveDemo() {
   const handleApplyTone = async () => {
     if (!inputText.trim()) return
     setIsProcessing(true)
-    setTimeout(() => {
-      setOutputText(`[${selectedTone.toUpperCase()}${selectedRole ? ` - ${selectedRole}` : ''}] ${inputText}`)
+    setError(null)
+
+    try {
+      const requestBody = {
+        sentence: inputText.trim(),
+        tone: selectedTone.trim(),
+        role: selectedRole.trim(),
+        temperature,
+      }
+
+      const response = await axios.post("/api/transform", requestBody)
+      setOutputText(response.data.data)
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.error(e)
+        setError(e.message)
+      } else {
+        console.error("Unknown error:", e)
+        setError("An unknown error occurred.")
+      }
+    } finally {
       setIsProcessing(false)
-    }, 1000)
+    }
   }
 
   const handleDetectTone = () => {
@@ -68,7 +88,7 @@ export default function InteractiveDemo() {
   const handleShare = () => {
     if (!outputText) return;
     if (navigator.share) {
-      navigator.share({ text: outputText })
+      navigator.share({text: outputText})
         .catch(err => console.error('Error sharing: ', err));
     } else {
       // Fallback for browsers that do not support navigator.share
@@ -110,17 +130,6 @@ export default function InteractiveDemo() {
 
         <div
           className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200 p-6 sm:p-8 flex flex-col items-center justify-center">
-
-          {/* Error Display */}
-          {error && (
-            <div className="w-full max-w-3xl mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
-              <div className="flex items-center gap-2 text-red-700">
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <span className="text-sm font-medium">{error}</span>
-              </div>
-            </div>
-          )}
-
           {/* Input */}
           <div className="w-full max-w-3xl mb-8">
             <label className="block text-sm font-semibold text-gray-700 mb-3">Your Original Text</label>
@@ -152,15 +161,15 @@ export default function InteractiveDemo() {
                 type="text"
                 placeholder="e.g. Mentor, Interviewer, Coach..."
                 value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
+                onChange={(e) => setSelectedRole(e.target.value.trimStart())}
                 className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none text-gray-700"
               />
             </div>
 
             {/* Temperature */}
             <div className="w-full">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Creativity Level: {temperature}
+              <label>
+                Creativity Level: {(temperature * 100).toFixed(0)}%
               </label>
               <input
                 type="range"
@@ -180,7 +189,8 @@ export default function InteractiveDemo() {
 
           {/* Tone Selection */}
           <div className="w-full max-w-3xl mb-8" ref={dropdownRef}>
-            <label htmlFor="toneSelectButton" className="block text-sm font-semibold text-slate-700 mb-2">Choose Your Tone</label>
+            <label htmlFor="toneSelectButton" className="block text-sm font-semibold text-slate-700 mb-2">Choose Your
+              Tone</label>
             <div className="relative">
               <button
                 id="toneSelectButton"
@@ -240,6 +250,16 @@ export default function InteractiveDemo() {
             </button>
           </div>
 
+          {/* Error Display */}
+          {error && (
+            <div className="w-full max-w-3xl mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-center gap-2 text-red-700">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <span className="text-sm font-medium">{error}</span>
+              </div>
+            </div>
+          )}
+
           {/* Output */}
           <div className="w-full max-w-3xl">
             <label className="block text-sm font-semibold text-gray-700 mb-3">Transformed Text</label>
@@ -265,7 +285,7 @@ export default function InteractiveDemo() {
                     onClick={() => setOutputText("")}
                     className="p-2 text-gray-400 hover:scale-110 hover:text-red-500 transition-transform cursor-pointer"
                   >
-                    <Trash2 className={"w-4 h-4"}/>
+                    <Trash2 className="w-4 h-4"/>
                   </button>
                   <button
                     onClick={handleCopy}
