@@ -1,6 +1,6 @@
 'use client'
 
-import {SetStateAction, useState} from 'react'
+import {SetStateAction, useEffect, useRef, useState} from 'react'
 import {Copy, Share2, Sparkles, Settings, ChevronDown, Trash2, Check} from 'lucide-react'
 
 const toneOptions = [
@@ -36,6 +36,9 @@ export default function InteractiveDemo() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [error, setError] = useState<string | null>(null);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selectedToneLabel = toneOptions.find(t => t.id === selectedTone)?.label || 'Select Tone'
 
@@ -53,23 +56,49 @@ export default function InteractiveDemo() {
   }
 
   const handleCopy = () => {
+    if (!outputText) return;
     navigator.clipboard.writeText(outputText)
-    setCopied(true)
-
-    setTimeout(() => {
-      setCopied(false)
-    }, 1250)
-  }
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      })
+      .catch(err => console.error('Failed to copy text: ', err));
+  };
 
   const handleShare = () => {
-    navigator.share({text: outputText})
-
-  }
+    if (!outputText) return;
+    if (navigator.share) {
+      navigator.share({ text: outputText })
+        .catch(err => console.error('Error sharing: ', err));
+    } else {
+      // Fallback for browsers that do not support navigator.share
+      handleCopy(); // Copy to clipboard as a fallback
+      alert("Text copied to clipboard. Sharing not supported on this browser.");
+    }
+  };
 
   const handleToneSelect = (toneId: SetStateAction<string>) => {
     setSelectedTone(toneId)
     setIsDropdownOpen(false)
   }
+
+  const handleClearInput = () => {
+    setInputText('');
+    setOutputText('');
+    setError(null);
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8">
@@ -130,28 +159,38 @@ export default function InteractiveDemo() {
           </div>
 
           {/* Tone Selection */}
-          <div className="w-full max-w-3xl mb-8">
-            <label className="block text-sm font-semibold text-gray-700 mb-4">Choose Your Tone</label>
+          <div className="w-full max-w-3xl mb-8" ref={dropdownRef}>
+            <label htmlFor="toneSelectButton" className="block text-sm font-semibold text-slate-700 mb-2">Choose Your Tone</label>
             <div className="relative">
               <button
+                id="toneSelectButton"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="w-full p-4 border-2 border-gray-200 rounded-xl flex items-center justify-between text-left hover:border-gray-300 transition-all duration-200 bg-white"
+                className="w-full p-3.5 border-2 border-slate-300 bg-white rounded-xl flex items-center justify-between text-left hover:border-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/50 focus:outline-none transition-colors duration-200"
+                aria-haspopup="listbox"
+                aria-expanded={isDropdownOpen}
               >
-                <span className="font-medium text-gray-700">{selectedToneLabel}</span>
+                <span className="font-medium text-slate-700">{selectedToneLabel}</span>
                 <ChevronDown
-                  className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}/>
+                  className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}/>
               </button>
 
               {isDropdownOpen && (
                 <div
-                  className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-gray-200 rounded-xl shadow-xl z-10 max-h-60 overflow-y-auto">
+                  className="absolute top-full left-0 right-0 mt-1.5 bg-white border-2 border-slate-300 rounded-xl shadow-lg z-20 max-h-60 overflow-y-auto py-1"
+                  role="listbox"
+                  aria-labelledby="toneSelectButton"
+                >
                   {toneOptions.map(tone => (
                     <button
                       key={tone.id}
                       onClick={() => handleToneSelect(tone.id)}
-                      className={`w-full p-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 ${
-                        selectedTone === tone.id ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-700'
+                      className={`w-full p-3 text-left text-sm transition-colors duration-150 ${
+                        selectedTone === tone.id
+                          ? 'bg-blue-50 text-blue-700 font-semibold'
+                          : 'text-slate-700 hover:bg-slate-100'
                       }`}
+                      role="option"
+                      aria-selected={selectedTone === tone.id}
                     >
                       {tone.label}
                     </button>

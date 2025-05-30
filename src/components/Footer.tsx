@@ -1,24 +1,28 @@
 export default function Footer() {
   return (
-    <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white">
+    <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-slate-900 text-slate-300">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <p className="text-lg mb-6">
             Made with ❤️ by{' '}
             <a
               href="https://github.com/eswar-7116"
-              className="text-blue-400 hover:text-blue-300 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sky-400 hover:text-sky-300 transition-colors font-medium"
             >
               Eswar Dudi
             </a>
           </p>
 
-          <div className="flex justify-center items-center gap-6 flex-wrap">
+          <div className="flex justify-center items-center gap-4 sm:gap-6 flex-wrap">
             <a
               href="https://github.com/eswar-7116/altertone"
-              className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors text-sm font-medium text-slate-200"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                    className="lucide lucide-github-icon lucide-github">
                 <path
@@ -30,15 +34,15 @@ export default function Footer() {
 
             <a
               href="#"
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 rounded-full hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-2 px-5 py-2 bg-sky-600 rounded-lg hover:bg-sky-500 transition-colors text-sm font-medium text-white"
             >
               Chrome Extension
             </a>
           </div>
         </div>
 
-        <div className="text-center mt-8 pt-8 border-t border-gray-800 text-gray-400 text-sm">
-          © 2025 AlterTone.
+        <div className="text-center mt-10 pt-8 border-t border-slate-700/50 text-slate-400 text-sm">
+          © {new Date().getFullYear()} AlterTone. All rights reserved.
         </div>
       </div>
     </footer>
