@@ -262,7 +262,7 @@ export default function InteractiveDemo() {
 
           {/* Output */}
           <div className="w-full max-w-3xl">
-            <label className="block text-sm font-semibold text-gray-700 mb-3">Transformed Text</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">Output</label>
             <div className="relative">
               <div
                 className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-700 overflow-auto">
@@ -275,7 +275,7 @@ export default function InteractiveDemo() {
                 ) : outputText ? (
                   <div className="animate-fade-in">{outputText}</div>
                 ) : (
-                  <div className="text-gray-400">Your transformed text will appear here...</div>
+                  <div className="text-gray-400">Your output will appear here...</div>
                 )}
               </div>
 
