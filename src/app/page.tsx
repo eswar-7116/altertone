@@ -15,8 +15,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: 'https://altertone-two.vercel.app/ss.png',
-        width: 1200,
-        height: 630,
+        width: 1899,
+        height: 1079,
         alt: 'AlterTone - Rewrite Your Tone with AI',
       },
     ],
