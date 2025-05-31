@@ -24,6 +24,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Open Graph Tags */}
+        <meta property="og:title" content="AlterTone - AI-Powered Tone Transformation" />
+        <meta property="og:description" content="Rewrite sentences in different tones using Google Gemini 2.0 Flash API" />
+        <meta property="og:image" content="https://altertone-two.vercel.app/ss.png" />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AlterTone - AI-Powered Tone Transformation" />
+        <meta name="twitter:description" content="Rewrite sentences in different tones using Google Gemini 2.0 Flash API" />
+        <meta name="twitter:image" content="https://altertone-two.vercel.app/ss.png" />
+        <meta name="twitter:creator" content="@EswarDudi" />
+        <title>AlterTone - Rewrite Your Tone with AI</title>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
