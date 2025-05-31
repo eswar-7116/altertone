@@ -5,15 +5,31 @@ import InteractiveDemo from '@/components/InteractiveDemo'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'AlterTone - Rewrite Your Tone with AI | Free Gemini-Powered Tool',
+  title: 'AlterTone - Rewrite Your Tone with AI',
   description: 'Transform your writing instantly with AI-powered tone adjustment. Free, open-source tool using Google Gemini 2.0 Flash API.',
   keywords: 'AI writing, tone rewriter, Gemini API, free tool, writing assistant',
   openGraph: {
     title: 'AlterTone - AI-Powered Tone Transformation',
     description: 'Rewrite sentences in different tones using Google Gemini 2.0 Flash API',
     type: 'website',
+    images: [
+      {
+        url: 'https://altertone-two.vercel.app/ss.png',
+        width: 1200,
+        height: 630,
+        alt: 'AlterTone - Rewrite Your Tone with AI',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AlterTone - AI-Powered Tone Transformation',
+    description: 'Rewrite sentences in different tones using Google Gemini 2.0 Flash API',
+    creator: '@EswarDudi',
+    images: ['https://altertone-two.vercel.app/ss.png'],
   },
 }
+
 
 export default function Home() {
   return (
