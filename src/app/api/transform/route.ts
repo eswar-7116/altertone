@@ -21,8 +21,8 @@ Task: Rewrite the following sentence to reflect the selected tone, optionally ta
 
 Sentence: "${data.sentence}"
 
-Tone/Emotion: "${data.tone}"  
-Role (optional): "${data.role}"  
+Tone/Emotion: "${data.tone}"
+Role (optional): "${data.role}"
 Temperature: ${data.temperature} (0-1) (adjust your creativity based on this)
 
 Requirements:
@@ -32,7 +32,7 @@ Requirements:
 - Keep it concise, no extra explanations or formatting.
 - Return only the transformed sentence.
 
-Now give the modified sentence without any qoutes.`
+Now give the modified sentence without any quotes.`
 
     const transformedText = await generateAiResponse(prompt)
 
