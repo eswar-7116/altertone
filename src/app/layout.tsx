@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title: 'AlterTone - AI-Powered Tone Transformation',
     description: 'Rewrite sentences in different tones using Google Gemini 2.0 Flash API',
     type: 'website',
+    url: 'https://altertone-two.vercel.app',
     images: [
       {
         url: 'https://altertone-two.vercel.app/ss.png',
