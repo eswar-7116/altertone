@@ -34,7 +34,8 @@ export default function InteractiveDemo() {
   const [selectedRole, setSelectedRole] = useState('')
   const [temperature, setTemperature] = useState(0.7)
   const [outputText, setOutputText] = useState('')
-  const [isProcessing, setIsProcessing] = useState(false)
+  const [isTransforming, setIsTransforming] = useState(false)
+  const [isDetecting, setIsDetecting] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +46,7 @@ export default function InteractiveDemo() {
 
   const handleApplyTone = async () => {
     if (!inputText.trim()) return
-    setIsProcessing(true)
+    setIsTransforming(true)
     setError(null)
 
     try {
@@ -67,12 +68,31 @@ export default function InteractiveDemo() {
         setError("An unknown error occurred.")
       }
     } finally {
-      setIsProcessing(false)
+      setIsTransforming(false)
     }
   }
 
-  const handleDetectTone = () => {
-    alert('Tone detection feature - would analyze current tone of input text')
+  const handleDetectTone = async () => {
+    if (!inputText.trim()) return
+    setIsDetecting(true)
+    setError(null)
+
+    try {
+      const requestBody = {sentence: inputText.trim()}
+
+      const response = await axios.post("/api/detect", requestBody)
+      setOutputText(response.data.data)
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.error(e)
+        setError(e.message)
+      } else {
+        console.error("Unknown error:", e)
+        setError("An unknown error occurred.")
+      }
+    } finally {
+      setIsDetecting(false)
+    }
   }
 
   const handleCopy = () => {
@@ -234,6 +254,7 @@ export default function InteractiveDemo() {
           <div className="w-full max-w-3xl flex flex-col sm:flex-row gap-4 mb-8 justify-center">
             <button
               onClick={handleDetectTone}
+              disabled={!inputText.trim() || isTransforming || isDetecting}
               className="flex items-center justify-center gap-2 px-6 py-3 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-xl hover:scale-105 hover:border-blue-500 hover:text-blue-600 transition-all duration-200 min-w-[160px]"
             >
               <Settings className="w-4 h-4"/>
@@ -242,11 +263,11 @@ export default function InteractiveDemo() {
 
             <button
               onClick={handleApplyTone}
-              disabled={!inputText.trim() || isProcessing}
+              disabled={!inputText.trim() || isTransforming || isDetecting}
               className="flex items-center justify-center gap-2 px-8 py-3 cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:scale-105 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px]"
             >
               <Sparkles className="w-4 h-4"/>
-              {isProcessing ? 'Transforming...' : 'Apply Tone'}
+              {isTransforming ? 'Transforming...' : 'Apply Tone'}
             </button>
           </div>
 
@@ -266,11 +287,17 @@ export default function InteractiveDemo() {
             <div className="relative">
               <div
                 className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-700 overflow-auto">
-                {isProcessing ? (
+                {isTransforming ? (
                   <div className="flex items-center gap-2 text-blue-600">
                     <div
                       className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
                     Transforming your text...
+                  </div>
+                ) : isDetecting ? (
+                  <div className="flex items-center gap-2 text-blue-600">
+                    <div
+                      className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                    Detecting the tone of your text...
                   </div>
                 ) : outputText ? (
                   <div className="animate-fade-in">{outputText}</div>
@@ -279,7 +306,7 @@ export default function InteractiveDemo() {
                 )}
               </div>
 
-              {outputText && !isProcessing && (
+              {outputText && !isTransforming && (
                 <div className="absolute bottom-4 right-4 flex gap-2">
                   <button
                     onClick={() => setOutputText("")}
