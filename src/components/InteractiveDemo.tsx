@@ -85,7 +85,7 @@ export default function InteractiveDemo() {
     } catch (e) {
       if (axios.isAxiosError(e)) {
         console.error(e)
-        setError(e.message)
+        setError(e.response?.data.message || e.message)
       } else {
         console.error("Unknown error:", e)
         setError("An unknown error occurred.")
