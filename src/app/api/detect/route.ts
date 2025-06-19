@@ -1,5 +1,5 @@
 import generateAiResponse from "@/utils/ai";
-import {ApiDetectSchema} from "@/validations/apiDetectSchema";
+import { ApiDetectSchema } from "@/validations/apiDetectSchema";
 
 export async function POST(req: Request): Promise<Response> {
   try {
@@ -7,13 +7,16 @@ export async function POST(req: Request): Promise<Response> {
     const result = ApiDetectSchema.safeParse(body);
 
     if (!result.success) {
-      return Response.json({
-        success: false,
-        message: result.error.errors[0].message,
-      }, {status: 400})
+      return Response.json(
+        {
+          success: false,
+          message: result.error.errors[0].message,
+        },
+        { status: 400 }
+      );
     }
 
-    const {sentence} = result.data;
+    const { sentence } = result.data;
 
     const prompt = `You are a tone detection assistant. Analyze the tone or emotion of the following sentence.
 
@@ -30,20 +33,23 @@ professional, casual, happy, serious, friendly, confident, sad, angry, pity, cou
 - Output format: a **single string**, e.g., \`"happy"\`
 - Do not include explanations, scores, or formatting—**only the tone ID**
 - Choose the most **dominant** tone in the sentence
-- Be strict: only one ID must be returned`
+- Be strict: only one ID must be returned`;
 
-    const tone = await generateAiResponse(prompt)
+    const tone = await generateAiResponse(prompt);
 
     return Response.json({
       success: true,
       message: "Successfully generated the transformed sentence",
       data: tone,
-    })
+    });
   } catch (error) {
-    console.error(error)
-    return Response.json({
-      success: false,
-      message: "Internal server error",
-    }, {status: 500})
+    console.error(error);
+    return Response.json(
+      {
+        success: false,
+        message: "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }

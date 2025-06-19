@@ -1,47 +1,63 @@
-import {MessageSquare, Users, Mic, Copy, Keyboard, Share2, Zap, Sparkles} from 'lucide-react'
+import {
+  MessageSquare,
+  Users,
+  Mic,
+  Copy,
+  Keyboard,
+  Share2,
+  Zap,
+  Sparkles,
+} from "lucide-react";
 
 const features = [
   {
     icon: MessageSquare,
-    title: 'Tone Switching',
-    description: 'Instantly transform your text between professional, casual, happy, serious, and more tones.'
+    title: "Tone Switching",
+    description:
+      "Instantly transform your text between professional, casual, happy, serious, and more tones.",
   },
   {
     icon: Users,
-    title: 'Role-Based Phrasing',
-    description: 'Adjust your message for specific roles like teacher, manager, friend, or influencer.'
+    title: "Role-Based Phrasing",
+    description:
+      "Adjust your message for specific roles like teacher, manager, friend, or influencer.",
   },
   {
     icon: Sparkles,
-    title: 'Creativity Control',
-    description: 'Adjust the creativity level to get precise or imaginative tone transformations.'
+    title: "Creativity Control",
+    description:
+      "Adjust the creativity level to get precise or imaginative tone transformations.",
   },
   {
     icon: Mic,
-    title: 'Voice Input',
-    description: 'Speak your text naturally and let AI convert it to your desired tone.'
+    title: "Voice Input",
+    description:
+      "Speak your text naturally and let AI convert it to your desired tone.",
   },
   {
     icon: Keyboard,
-    title: 'Typing Animation',
-    description: 'Watch your rewritten text appear with smooth, engaging animations.'
+    title: "Typing Animation",
+    description:
+      "Watch your rewritten text appear with smooth, engaging animations.",
   },
   {
     icon: Share2,
-    title: 'Quick Share',
-    description: 'Share your perfectly toned messages instantly across platforms.'
+    title: "Quick Share",
+    description:
+      "Share your perfectly toned messages instantly across platforms.",
   },
   {
     icon: Copy,
-    title: 'One-Click Copy',
-    description: 'Copy your rewritten text to clipboard with a single click.'
+    title: "One-Click Copy",
+    description: "Copy your rewritten text to clipboard with a single click.",
   },
   {
     icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Powered by Google Gemini for instant, high-quality transformations.'
-  }
-]
+    title: "Lightning Fast",
+    description:
+      "Powered by Google Gemini for instant, high-quality transformations.",
+  },
+];
 
 export default function Features() {
   return (
@@ -62,9 +78,8 @@ export default function Features() {
               key={index}
               className="group p-6 rounded-2xl bg-white/60 backdrop-blur-lg shadow-xl border border-slate-200/70 hover:border-blue-400/70 transition-all duration-300 flex flex-col items-start"
             >
-              <div
-                className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
-                <feature.icon className="w-6 h-6 text-white"/>
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform duration-300">
+                <feature.icon className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-slate-800 mb-2">
                 {feature.title}
@@ -77,5 +92,5 @@ export default function Features() {
         </div>
       </div>
     </section>
-  )
+  );
 }

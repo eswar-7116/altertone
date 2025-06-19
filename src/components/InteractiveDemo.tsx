@@ -1,53 +1,62 @@
-'use client'
+"use client";
 
-import {SetStateAction, useEffect, useRef, useState} from 'react'
-import {Copy, Share2, Sparkles, Settings, ChevronDown, Trash2, Check} from 'lucide-react'
+import { SetStateAction, useEffect, useRef, useState } from "react";
+import {
+  Copy,
+  Share2,
+  Sparkles,
+  Settings,
+  ChevronDown,
+  Trash2,
+  Check,
+} from "lucide-react";
 import axios from "axios";
 
 const toneOptions = [
-  {id: 'professional', label: 'Professional'},
-  {id: 'casual', label: 'Casual'},
-  {id: 'happy', label: 'Happy'},
-  {id: 'serious', label: 'Serious'},
-  {id: 'friendly', label: 'Friendly'},
-  {id: 'confident', label: 'Confident'},
-  {id: 'sad', label: 'Sad'},
-  {id: 'angry', label: 'Angry'},
-  {id: 'pity', label: 'Pity'},
-  {id: 'courage', label: 'Courageous'},
-  {id: 'disgust', label: 'Disgust'},
-  {id: 'scary', label: 'Scary'},
-  {id: 'romantic', label: 'Romantic'},
-  {id: 'humour', label: 'Humorous'},
-  {id: 'assertive', label: 'Assertive'},
-  {id: 'request', label: 'Request'},
-  {id: 'mad', label: 'Mad'},
-  {id: 'sarcastic', label: 'Sarcastic'},
-  {id: 'inspirational', label: 'Inspirational'},
-  {id: 'optimistic', label: 'Optimistic'},
-  {id: 'pessimistic', label: 'Pessimistic'},
-]
+  { id: "angry", label: "Angry" },
+  { id: "assertive", label: "Assertive" },
+  { id: "casual", label: "Casual" },
+  { id: "confident", label: "Confident" },
+  { id: "courage", label: "Courageous" },
+  { id: "disgust", label: "Disgust" },
+  { id: "friendly", label: "Friendly" },
+  { id: "happy", label: "Happy" },
+  { id: "humour", label: "Humorous" },
+  { id: "inspirational", label: "Inspirational" },
+  { id: "mad", label: "Mad" },
+  { id: "optimistic", label: "Optimistic" },
+  { id: "pessimistic", label: "Pessimistic" },
+  { id: "pity", label: "Pity" },
+  { id: "professional", label: "Professional" },
+  { id: "request", label: "Request" },
+  { id: "romantic", label: "Romantic" },
+  { id: "sarcastic", label: "Sarcastic" },
+  { id: "scary", label: "Scary" },
+  { id: "sad", label: "Sad" },
+  { id: "serious", label: "Serious" },
+];
 
 export default function InteractiveDemo() {
-  const [inputText, setInputText] = useState('')
-  const [selectedTone, setSelectedTone] = useState('professional')
-  const [selectedRole, setSelectedRole] = useState('')
-  const [temperature, setTemperature] = useState(0.7)
-  const [outputText, setOutputText] = useState('')
-  const [isTransforming, setIsTransforming] = useState(false)
-  const [isDetecting, setIsDetecting] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const [inputText, setInputText] = useState("");
+  const [selectedTone, setSelectedTone] = useState("professional");
+  const [selectedRole, setSelectedRole] = useState("");
+  const [temperature, setTemperature] = useState(0.7);
+  const [outputText, setOutputText] = useState("");
+  const [isTransforming, setIsTransforming] = useState(false);
+  const [isDetecting, setIsDetecting] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const selectedToneLabel = toneOptions.find(t => t.id === selectedTone)?.label || 'Select Tone'
+  const selectedToneLabel =
+    toneOptions.find((t) => t.id === selectedTone)?.label || "Select Tone";
 
   const handleApplyTone = async () => {
-    if (!inputText.trim()) return
-    setIsTransforming(true)
-    setError(null)
+    if (!inputText.trim()) return;
+    setIsTransforming(true);
+    setError(null);
 
     try {
       const requestBody = {
@@ -55,61 +64,63 @@ export default function InteractiveDemo() {
         tone: selectedTone.trim(),
         role: selectedRole.trim(),
         temperature,
-      }
+      };
 
-      const response = await axios.post("/api/transform", requestBody)
-      setOutputText(response.data.data)
+      const response = await axios.post("/api/transform", requestBody);
+      setOutputText(response.data.data);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        console.error(e)
-        setError(e.message)
+        console.error(e);
+        setError(e.message);
       } else {
-        console.error("Unknown error:", e)
-        setError("An unknown error occurred.")
+        console.error("Unknown error:", e);
+        setError("An unknown error occurred.");
       }
     } finally {
-      setIsTransforming(false)
+      setIsTransforming(false);
     }
-  }
+  };
 
   const handleDetectTone = async () => {
-    if (!inputText.trim()) return
-    setIsDetecting(true)
-    setError(null)
+    if (!inputText.trim()) return;
+    setIsDetecting(true);
+    setError(null);
 
     try {
-      const requestBody = {sentence: inputText.trim()}
+      const requestBody = { sentence: inputText.trim() };
 
-      const response = await axios.post("/api/detect", requestBody)
-      setOutputText(response.data.data)
+      const response = await axios.post("/api/detect", requestBody);
+      setOutputText(response.data.data);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        console.error(e)
-        setError(e.response?.data.message || e.message)
+        console.error(e);
+        setError(e.response?.data.message || e.message);
       } else {
-        console.error("Unknown error:", e)
-        setError("An unknown error occurred.")
+        console.error("Unknown error:", e);
+        setError("An unknown error occurred.");
       }
     } finally {
-      setIsDetecting(false)
+      setIsDetecting(false);
     }
-  }
+  };
 
   const handleCopy = () => {
     if (!outputText) return;
-    navigator.clipboard.writeText(outputText)
+    navigator.clipboard
+      .writeText(outputText)
       .then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 1500);
       })
-      .catch(err => console.error('Failed to copy text: ', err));
+      .catch((err) => console.error("Failed to copy text: ", err));
   };
 
   const handleShare = () => {
     if (!outputText) return;
     if (navigator.share) {
-      navigator.share({text: outputText})
-        .catch(err => console.error('Error sharing: ', err));
+      navigator
+        .share({ text: outputText })
+        .catch((err) => console.error("Error sharing: ", err));
     } else {
       // Fallback for browsers that do not support navigator.share
       handleCopy(); // Copy to clipboard as a fallback
@@ -118,25 +129,28 @@ export default function InteractiveDemo() {
   };
 
   const handleToneSelect = (toneId: SetStateAction<string>) => {
-    setSelectedTone(toneId)
-    setIsDropdownOpen(false)
-  }
+    setSelectedTone(toneId);
+    setIsDropdownOpen(false);
+  };
 
   const handleClearInput = () => {
-    setInputText('');
-    setOutputText('');
+    setInputText("");
+    setOutputText("");
     setError(null);
-  }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -144,15 +158,20 @@ export default function InteractiveDemo() {
     <section className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 id={"demo"} className="text-4xl font-bold text-gray-900 mb-4">Try AlterTone Now</h2>
-          <p className="text-xl text-gray-600">Experience the magic of AI-powered tone transformation</p>
+          <h2 id={"demo"} className="text-4xl font-bold text-gray-900 mb-4">
+            Try AlterTone Now
+          </h2>
+          <p className="text-xl text-gray-600">
+            Experience the magic of AI-powered tone transformation
+          </p>
         </div>
 
-        <div
-          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200 p-6 sm:p-8 flex flex-col items-center justify-center">
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200 p-6 sm:p-8 flex flex-col items-center justify-center">
           {/* Input */}
           <div className="w-full max-w-3xl mb-8">
-            <label className="block text-sm font-semibold text-gray-700 mb-3">Your Original Text</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
+              Your Original Text
+            </label>
             <div className="relative">
               <textarea
                 value={inputText}
@@ -166,7 +185,7 @@ export default function InteractiveDemo() {
                   className="absolute top-3 right-3 p-2 text-gray-400 hover:text-red-500 hover:scale-110 transition-all duration-200 cursor-pointer"
                   title="Clear input"
                 >
-                  <Trash2 className="w-4 h-4"/>
+                  <Trash2 className="w-4 h-4" />
                 </button>
               )}
             </div>
@@ -176,7 +195,9 @@ export default function InteractiveDemo() {
           <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* Role input */}
             <div className="w-full">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">Role (Optional)</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
+                Role (Optional)
+              </label>
               <input
                 type="text"
                 placeholder="e.g. Mentor, Interviewer, Coach..."
@@ -188,9 +209,7 @@ export default function InteractiveDemo() {
 
             {/* Temperature */}
             <div className="w-full">
-              <label>
-                Creativity Level: {(temperature * 100).toFixed(0)}%
-              </label>
+              <label>Creativity Level: {(temperature * 100).toFixed(0)}%</label>
               <input
                 type="range"
                 min="0"
@@ -209,8 +228,12 @@ export default function InteractiveDemo() {
 
           {/* Tone Selection */}
           <div className="w-full max-w-3xl mb-8" ref={dropdownRef}>
-            <label htmlFor="toneSelectButton" className="block text-sm font-semibold text-slate-700 mb-2">Choose Your
-              Tone</label>
+            <label
+              htmlFor="toneSelectButton"
+              className="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Choose Your Tone
+            </label>
             <div className="relative">
               <button
                 id="toneSelectButton"
@@ -219,9 +242,14 @@ export default function InteractiveDemo() {
                 aria-haspopup="listbox"
                 aria-expanded={isDropdownOpen}
               >
-                <span className="font-medium text-slate-700">{selectedToneLabel}</span>
+                <span className="font-medium text-slate-700">
+                  {selectedToneLabel}
+                </span>
                 <ChevronDown
-                  className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}/>
+                  className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {isDropdownOpen && (
@@ -230,14 +258,14 @@ export default function InteractiveDemo() {
                   role="listbox"
                   aria-labelledby="toneSelectButton"
                 >
-                  {toneOptions.map(tone => (
+                  {toneOptions.map((tone) => (
                     <button
                       key={tone.id}
                       onClick={() => handleToneSelect(tone.id)}
                       className={`w-full p-3 text-left text-sm transition-colors duration-150 ${
                         selectedTone === tone.id
-                          ? 'bg-blue-50 text-blue-700 font-semibold'
-                          : 'text-slate-700 hover:bg-slate-100'
+                          ? "bg-blue-50 text-blue-700 font-semibold"
+                          : "text-slate-700 hover:bg-slate-100"
                       }`}
                       role="option"
                       aria-selected={selectedTone === tone.id}
@@ -257,7 +285,7 @@ export default function InteractiveDemo() {
               disabled={!inputText.trim() || isTransforming || isDetecting}
               className="flex items-center justify-center gap-2 px-6 py-3 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-xl hover:scale-105 hover:border-blue-500 hover:text-blue-600 transition-all duration-200 min-w-[160px]"
             >
-              <Settings className="w-4 h-4"/>
+              <Settings className="w-4 h-4" />
               Detect Tone
             </button>
 
@@ -266,8 +294,8 @@ export default function InteractiveDemo() {
               disabled={!inputText.trim() || isTransforming || isDetecting}
               className="flex items-center justify-center gap-2 px-8 py-3 cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:scale-105 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px]"
             >
-              <Sparkles className="w-4 h-4"/>
-              {isTransforming ? 'Transforming...' : 'Apply Tone'}
+              <Sparkles className="w-4 h-4" />
+              {isTransforming ? "Transforming..." : "Apply Tone"}
             </button>
           </div>
 
@@ -283,26 +311,27 @@ export default function InteractiveDemo() {
 
           {/* Output */}
           <div className="w-full max-w-3xl">
-            <label className="block text-sm font-semibold text-gray-700 mb-3">Output</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
+              Output
+            </label>
             <div className="relative">
-              <div
-                className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-700 overflow-auto">
+              <div className="w-full h-32 p-4 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-700 overflow-auto">
                 {isTransforming ? (
                   <div className="flex items-center gap-2 text-blue-600">
-                    <div
-                      className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                    <div className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
                     Transforming your text...
                   </div>
                 ) : isDetecting ? (
                   <div className="flex items-center gap-2 text-blue-600">
-                    <div
-                      className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                    <div className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
                     Detecting the tone of your text...
                   </div>
                 ) : outputText ? (
                   <div className="animate-fade-in">{outputText}</div>
                 ) : (
-                  <div className="text-gray-400">Your output will appear here...</div>
+                  <div className="text-gray-400">
+                    Your output will appear here...
+                  </div>
                 )}
               </div>
 
@@ -312,21 +341,25 @@ export default function InteractiveDemo() {
                     onClick={() => setOutputText("")}
                     className="p-2 text-gray-400 hover:scale-110 hover:text-red-500 transition-transform cursor-pointer"
                   >
-                    <Trash2 className="w-4 h-4"/>
+                    <Trash2 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={handleCopy}
                     className="p-2 text-gray-400 hover:scale-110 hover:text-blue-500 transition-transform cursor-pointer"
                     title="Copy to clipboard"
                   >
-                    {copied ? <Check className={"w-4 h-4"}/> : <Copy className={"w-4 h-4"}/>}
+                    {copied ? (
+                      <Check className={"w-4 h-4"} />
+                    ) : (
+                      <Copy className={"w-4 h-4"} />
+                    )}
                   </button>
                   <button
                     onClick={handleShare}
                     className="p-2 text-gray-400 hover:scale-110 hover:text-blue-500 transition-transform cursor-pointer"
                     title="Share"
                   >
-                    <Share2 className="w-4 h-4"/>
+                    <Share2 className="w-4 h-4" />
                   </button>
                 </div>
               )}
@@ -335,5 +368,5 @@ export default function InteractiveDemo() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import {ApiTransformSchema} from "@/validations/apiTransformSchema";
+import { ApiTransformSchema } from "@/validations/apiTransformSchema";
 import generateAiResponse from "@/utils/ai";
 
 export async function POST(req: Request): Promise<Response> {
@@ -7,10 +7,13 @@ export async function POST(req: Request): Promise<Response> {
     const result = ApiTransformSchema.safeParse(body);
 
     if (!result.success) {
-      return Response.json({
-        success: false,
-        message: result.error.errors[0].message,
-      }, {status: 400})
+      return Response.json(
+        {
+          success: false,
+          message: result.error.errors[0].message,
+        },
+        { status: 400 }
+      );
     }
 
     const data = result.data;
@@ -32,20 +35,23 @@ Requirements:
 - Keep it concise, no extra explanations or formatting, and no quotes.
 - Return only the transformed sentence.
 
-Now give the modified sentence.`
+Now give the modified sentence.`;
 
-    const transformedText = await generateAiResponse(prompt)
+    const transformedText = await generateAiResponse(prompt);
 
     return Response.json({
       success: true,
       message: "Successfully generated the transformed sentence",
       data: transformedText,
-    })
+    });
   } catch (error) {
-    console.error(error)
-    return Response.json({
-      success: false,
-      message: "Internal server error",
-    }, {status: 500})
+    console.error(error);
+    return Response.json(
+      {
+        success: false,
+        message: "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }
