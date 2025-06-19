@@ -29,10 +29,10 @@ Requirements:
 - Preserve the original meaning.
 - Reflect the selected tone as naturally as possible.
 - If a role is provided, write as if the person in that role would have said it.
-- Keep it concise, no extra explanations or formatting.
+- Keep it concise, no extra explanations or formatting, and no quotes.
 - Return only the transformed sentence.
 
-Now give the modified sentence without any quotes.`
+Now give the modified sentence.`
 
     const transformedText = await generateAiResponse(prompt)
 
