@@ -30,13 +30,6 @@ export default function Hero() {
             Try AlterTone Now
             <ArrowDown className="w-5 h-5 group-hover:animate-bounce" />
           </a>
-
-          <a
-            className="flex items-center justify-center px-8 py-4 border-2 cursor-pointer border-blue-500 text-blue-600 rounded-lg font-semibold hover:bg-blue-500/10 hover:scale-105 hover:shadow-lg transition-all duration-300 min-w-[220px]"
-            href={"#"}
-          >
-            Download Extension
-          </a>
         </div>
       </div>
     </section>

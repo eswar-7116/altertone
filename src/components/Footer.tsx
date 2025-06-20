@@ -39,13 +39,6 @@ export default function Footer() {
               </svg>
               <span>GitHub</span>
             </a>
-
-            <a
-              href="#"
-              className="flex items-center gap-2 px-5 py-2 bg-sky-600 rounded-lg hover:bg-sky-500 transition-colors text-sm font-medium text-white"
-            >
-              Chrome Extension
-            </a>
           </div>
         </div>
 
