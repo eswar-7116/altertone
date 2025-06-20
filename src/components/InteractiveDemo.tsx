@@ -283,7 +283,7 @@ export default function InteractiveDemo() {
             <button
               onClick={handleDetectTone}
               disabled={!inputText.trim() || isTransforming || isDetecting}
-              className="flex items-center justify-center gap-2 px-6 py-3 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-xl hover:scale-105 hover:border-blue-500 hover:text-blue-600 transition-all duration-200 min-w-[160px]"
+              className="flex items-center justify-center gap-2 px-6 py-3 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-xl hover:scale-105 hover:border-blue-500 hover:text-blue-600 transition-all duration-200 min-w-[160px] disabled:cursor-not-allowed"
             >
               <Settings className="w-4 h-4" />
               Detect Tone
