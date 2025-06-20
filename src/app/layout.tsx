@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     "Transform your writing instantly with AI-powered tone adjustment. Free, open-source tool using Google Gemini 2.0 Flash API.",
   keywords:
-    "AI writing, tone rewriter, Gemini API, free tool, writing assistant",
+    "AI writing, tone rewriter, Gemini API, free tool, transformation assistant",
   openGraph: {
     title: "AlterTone - AI-Powered Tone Transformation",
     description:
@@ -50,6 +50,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="google-site-verification"
+          content="9CtP8tQUXQwpU_i_OitrZ7zr3DYXQlICkJM1I24-yuU"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
