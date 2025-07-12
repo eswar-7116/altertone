@@ -6,13 +6,6 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 backdrop-blur-2xl"></div>
 
       <div className="relative max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm border border-blue-300/50 mb-8 shadow-sm">
-          <Sparkles className="w-5 h-5 text-blue-600" />
-          <span className="text-sm font-semibold text-blue-700">
-            Powered by Google Gemini
-          </span>
-        </div>
-
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6 leading-tight">
           Rewrite Your Tone with AI
         </h1>
