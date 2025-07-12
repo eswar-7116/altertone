@@ -1,9 +1,7 @@
 import {
   MessageSquare,
   Users,
-  Mic,
   Copy,
-  Keyboard,
   Share2,
   Zap,
   Sparkles,
@@ -27,18 +25,6 @@ const features = [
     title: "Creativity Control",
     description:
       "Adjust the creativity level to get precise or imaginative tone transformations.",
-  },
-  {
-    icon: Mic,
-    title: "Voice Input",
-    description:
-      "Speak your text naturally and let AI convert it to your desired tone.",
-  },
-  {
-    icon: Keyboard,
-    title: "Typing Animation",
-    description:
-      "Watch your rewritten text appear with smooth, engaging animations.",
   },
   {
     icon: Share2,
@@ -72,7 +58,7 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
