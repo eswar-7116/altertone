@@ -10,7 +10,7 @@ export async function POST(req: Request): Promise<Response> {
       return Response.json(
         {
           success: false,
-          message: result.error.errors[0].message,
+          message: result.error.issues[0].message,
         },
         { status: 400 }
       );
